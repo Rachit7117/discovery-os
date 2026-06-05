@@ -1,10 +1,12 @@
-import type { UserProfile, UserProgress, ChatMessage } from '@/types';
+import type { UserProfile, UserProgress, ChatMessage, AssessmentResult, MentorPersonaId } from '@/types';
 
 const KEYS = {
   USER_PROFILE: 'discovery_os_profile',
   USER_PROGRESS: 'discovery_os_progress',
   CHAT_HISTORY: 'discovery_os_chat',
   ONBOARDED: 'discovery_os_onboarded',
+  ASSESSMENT: 'discovery_os_assessment',
+  ACTIVE_PERSONA: 'discovery_os_persona',
 } as const;
 
 // ─── Profile ──────────────────────────────────────────────────────────────────
@@ -41,6 +43,7 @@ const DEFAULT_PROGRESS: UserProgress = {
   lastActiveDate: new Date().toISOString().split('T')[0],
   totalPoints: 0,
   quizScores: {},
+  totalStudyMinutes: 0,
 };
 
 export function getUserProgress(): UserProgress {
@@ -59,11 +62,10 @@ export function saveUserProgress(progress: UserProgress): void {
   localStorage.setItem(KEYS.USER_PROGRESS, JSON.stringify(progress));
 }
 
-export function markLessonComplete(lessonId: string, quizScore?: number): void {
+export function markLessonComplete(lessonId: string, quizScore?: number, durationMinutes?: number): void {
   const progress = getUserProgress();
   const today = new Date().toISOString().split('T')[0];
 
-  // Update streak
   const lastActive = progress.lastActiveDate;
   const yesterday = new Date();
   yesterday.setDate(yesterday.getDate() - 1);
@@ -94,6 +96,7 @@ export function markLessonComplete(lessonId: string, quizScore?: number): void {
     quizScores: quizScore !== undefined
       ? { ...progress.quizScores, [lessonId]: quizScore }
       : progress.quizScores,
+    totalStudyMinutes: (progress.totalStudyMinutes ?? 0) + (durationMinutes ?? 0),
   };
 
   saveUserProgress(updated);
@@ -123,6 +126,36 @@ export function getCompletionPercentage(totalLessons: number): number {
   return Math.round((progress.completedLessons.length / totalLessons) * 100);
 }
 
+// ─── Assessment ───────────────────────────────────────────────────────────────
+
+export function saveAssessmentResult(result: AssessmentResult): void {
+  if (typeof window === 'undefined') return;
+  localStorage.setItem(KEYS.ASSESSMENT, JSON.stringify(result));
+}
+
+export function getAssessmentResult(): AssessmentResult | null {
+  if (typeof window === 'undefined') return null;
+  const raw = localStorage.getItem(KEYS.ASSESSMENT);
+  if (!raw) return null;
+  try {
+    return JSON.parse(raw) as AssessmentResult;
+  } catch {
+    return null;
+  }
+}
+
+// ─── Mentor Persona ───────────────────────────────────────────────────────────
+
+export function saveActivePersona(personaId: MentorPersonaId): void {
+  if (typeof window === 'undefined') return;
+  localStorage.setItem(KEYS.ACTIVE_PERSONA, personaId);
+}
+
+export function getActivePersona(): MentorPersonaId {
+  if (typeof window === 'undefined') return 'teresa';
+  return (localStorage.getItem(KEYS.ACTIVE_PERSONA) as MentorPersonaId) ?? 'teresa';
+}
+
 // ─── Chat ─────────────────────────────────────────────────────────────────────
 
 export function getChatHistory(): ChatMessage[] {
@@ -138,10 +171,11 @@ export function getChatHistory(): ChatMessage[] {
 
 export function saveChatHistory(messages: ChatMessage[]): void {
   if (typeof window === 'undefined') return;
-  // Keep last 100 messages
   const trimmed = messages.slice(-100);
   localStorage.setItem(KEYS.CHAT_HISTORY, JSON.stringify(trimmed));
 }
+
+// ─── Reset ────────────────────────────────────────────────────────────────────
 
 export function clearAllData(): void {
   if (typeof window === 'undefined') return;

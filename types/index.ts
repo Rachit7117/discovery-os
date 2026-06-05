@@ -10,7 +10,41 @@ export interface UserProfile {
   createdAt: string;
 }
 
-// ─── Progress ────────────────────────────────────────────────────────────────
+// ─── Assessment ───────────────────────────────────────────────────────────────
+
+export interface AssessmentAnswer {
+  questionId: string;
+  selectedOption: number;
+  correct: boolean;
+  points: number;
+}
+
+export type MaturityLevel = 'beginner' | 'intermediate' | 'advanced';
+
+export interface AssessmentResult {
+  score: number;          // 0–100
+  maturityLevel: MaturityLevel;
+  answers: AssessmentAnswer[];
+  completedAt: string;
+  breakdown: Record<string, number>; // topic → score %
+}
+
+// ─── Mentor Personas ──────────────────────────────────────────────────────────
+
+export type MentorPersonaId = 'teresa' | 'marty' | 'founder';
+
+export interface MentorPersona {
+  id: MentorPersonaId;
+  name: string;
+  title: string;
+  avatar: string;         // emoji
+  gradient: string;
+  description: string;
+  style: string;          // teaching style label
+  systemPrompt: string;
+}
+
+// ─── Progress ─────────────────────────────────────────────────────────────────
 
 export type LessonStatus = 'locked' | 'available' | 'in-progress' | 'completed';
 
@@ -32,6 +66,7 @@ export interface UserProgress {
   lastActiveDate: string;
   totalPoints: number;
   quizScores: Record<string, number>;
+  totalStudyMinutes: number;
 }
 
 // ─── Content ─────────────────────────────────────────────────────────────────
@@ -88,6 +123,7 @@ export interface Module {
   color: string;
   gradient: string;
   lessons: string[]; // lesson IDs
+  level: ExperienceLevel;
 }
 
 // ─── Chat ─────────────────────────────────────────────────────────────────────
@@ -97,8 +133,22 @@ export interface ChatMessage {
   role: 'user' | 'assistant';
   content: string;
   timestamp: string;
+  personaId?: MentorPersonaId;
 }
 
 // ─── UI State ─────────────────────────────────────────────────────────────────
 
 export type LoadingState = 'idle' | 'loading' | 'success' | 'error';
+
+// ─── Dashboard ────────────────────────────────────────────────────────────────
+
+export interface DashboardStats {
+  discoveryScore: number | null;
+  lessonsCompleted: number;
+  totalLessons: number;
+  quizAccuracy: number | null;  // average quiz score %
+  streak: number;
+  estimatedMinutes: number;
+  totalPoints: number;
+  maturityLevel: MaturityLevel | null;
+}

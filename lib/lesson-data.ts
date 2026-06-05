@@ -13,6 +13,7 @@ export const MODULES: Module[] = [
     color: 'from-blue-500 to-cyan-500',
     gradient: 'from-blue-500/20 to-cyan-500/20',
     lessons: ['week-1-customer-problems'],
+    level: 'beginner',
   },
   {
     id: 'customer-interviews',
@@ -24,6 +25,7 @@ export const MODULES: Module[] = [
     color: 'from-violet-500 to-purple-500',
     gradient: 'from-violet-500/20 to-purple-500/20',
     lessons: ['week-2-customer-interviews'],
+    level: 'beginner',
   },
   {
     id: 'jobs-to-be-done',
@@ -35,6 +37,7 @@ export const MODULES: Module[] = [
     color: 'from-amber-500 to-orange-500',
     gradient: 'from-amber-500/20 to-orange-500/20',
     lessons: ['week-3-jobs-to-be-done'],
+    level: 'intermediate',
   },
   {
     id: 'opportunity-solution-trees',
@@ -46,6 +49,7 @@ export const MODULES: Module[] = [
     color: 'from-emerald-500 to-green-500',
     gradient: 'from-emerald-500/20 to-green-500/20',
     lessons: ['week-4-opportunity-solution-trees'],
+    level: 'intermediate',
   },
   {
     id: 'experiment-design',
@@ -57,6 +61,7 @@ export const MODULES: Module[] = [
     color: 'from-rose-500 to-pink-500',
     gradient: 'from-rose-500/20 to-pink-500/20',
     lessons: ['week-5-experiment-design'],
+    level: 'intermediate',
   },
   {
     id: 'discovery-metrics',
@@ -68,6 +73,7 @@ export const MODULES: Module[] = [
     color: 'from-indigo-500 to-blue-500',
     gradient: 'from-indigo-500/20 to-blue-500/20',
     lessons: ['week-6-discovery-metrics'],
+    level: 'advanced',
   },
 ];
 
