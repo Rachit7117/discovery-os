@@ -587,7 +587,7 @@ export default function LandingPage() {
             </p>
             <div className="flex items-center gap-3">
               <a
-                href="https://github.com/rachit-agarwal"
+                href="https://github.com/Rachit7117"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-white/10 bg-white/3 text-xs text-slate-400 hover:text-white hover:bg-white/8 hover:border-white/20 transition-all"
