@@ -596,7 +596,7 @@ export default function LandingPage() {
                 GitHub
               </a>
               <a
-                href="https://linkedin.com/in/rachit-agarwal"
+                href="https://www.linkedin.com/in/rachitagarwal7117"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-blue-500/20 bg-blue-500/8 text-xs text-blue-400 hover:text-blue-300 hover:bg-blue-500/15 transition-all"
