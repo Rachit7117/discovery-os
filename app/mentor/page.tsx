@@ -252,7 +252,7 @@ export default function MentorPage() {
           <div className="flex items-center gap-2">
             <Badge variant="secondary" className="text-xs hidden sm:flex">
               <Sparkles className="w-3 h-3 mr-1" />
-              GPT-4o mini
+              Llama 3.3 · Groq
             </Badge>
             {hasConversation && (
               <Button variant="ghost" size="sm" onClick={clearHistory}>

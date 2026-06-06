@@ -19,4 +19,4 @@ export interface AIProvider {
   streamChat(params: StreamParams): Promise<ReadableStream<Uint8Array>>;
 }
 
-export type ProviderName = 'gemini' | 'openai';
+export type ProviderName = 'groq' | 'gemini' | 'openai';
